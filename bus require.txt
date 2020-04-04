@@ -1,0 +1,27 @@
+
+
+
+
+
+							db name = bus
+	
+	designation + date in which different types of buses available at different times
+	show details about busses + times + fares
+	seat availability
+
+
+						    db name = userbooking
+	
+	firstly,	choose designation and date
+	secondly,	redirect to the details (designation, time, fare and bus type)
+	thirdly,	selected detail will bring you to the booking section where u can reserve desired seat
+	fourthly,	show success message and detail of booking
+
+
+
+						    db name = reservations
+	
+	userbooking seat will reduce from bus database
+	booking detail will save in reservation with all of the designation, date, time, bus, seat and user
+	additionally a role with 0 value inserted with it for cencellation purpose that will again increase seat number
+
