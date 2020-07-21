@@ -13,26 +13,27 @@ export default class AuthAdminContextProvider extends Component {
 
     componentDidMount = () => {
 
-        firebase.auth().onAuthStateChanged( (admin) => {
-        if(admin){
-            db.collection('userInfo').doc(admin.email).get().then(snapShot => {
-     
-                let userStatus = snapShot.data();
-                if( userStatus.role === true ){
-                    console.log("admin logged in")
-                    this.setState({adminAuthenticated: true, admin: admin })
-                }
-                else if( userStatus.role === false ){
-                    console.log("admin logged out")
-                    this.setState({adminAuthenticated: false, admin: {}})
-                }else if( userStatus.role === 1 ){
-                    console.log("blocked User")
-                    this.setState({adminAuthenticated: false, admin: {}})
-                }
-            })
-        }else{
-            this.setState({adminAuthenticated: false, admin: {}})
-        }
+        firebase.auth().onAuthStateChanged((admin) => {
+            if (admin) {
+                db.collection('userInfo').doc(admin.email).get().then(snapShot => {
+                    if (snapShot.exists) {
+                        let userStatus = snapShot.data();
+                        if (userStatus.role === true) {
+                            console.log("admin logged in")
+                            this.setState({ adminAuthenticated: true, admin: admin })
+                        }
+                        else if (userStatus.role === false) {
+                            console.log("admin logged out")
+                            this.setState({ adminAuthenticated: false, admin: {} })
+                        } else if (userStatus.role === 1) {
+                            console.log("blocked User")
+                            this.setState({ adminAuthenticated: false, admin: {} })
+                        }
+                    }
+                })
+            } else {
+                this.setState({ adminAuthenticated: false, admin: {} })
+            }
 
 
             // if (admin) {
@@ -43,7 +44,7 @@ export default class AuthAdminContextProvider extends Component {
             //     console.log( "admin is logged out" )
             //     this.setState({adminAuthenticated: false, admin: {}})
             // }
-        
+
         });
     }
 
@@ -51,7 +52,7 @@ export default class AuthAdminContextProvider extends Component {
 
         return (
             <AuthAdminContext.Provider value={{ ...this.state }}>
-            {this.props.children}
+                {this.props.children}
             </AuthAdminContext.Provider>
         )
     }

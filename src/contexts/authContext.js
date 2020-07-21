@@ -19,7 +19,8 @@ export default class AuthContextProvider extends Component {
             const loggedUserId = user.email;
             db.collection('userInfo').doc(loggedUserId).get().then(snapShot => {
    
-                let userStatus = snapShot.data();
+                if(snapShot.exists){
+                    let userStatus = snapShot.data();
                   
                 if(userStatus.role === false){
                      console.log("user logged in")
@@ -32,6 +33,7 @@ export default class AuthContextProvider extends Component {
                 else if( userStatus.role === 1 ){
                     console.log("Blocked User")
                     this.setState({isAuthenticated: false, user: {}})
+                }
                 }
             })
           } else{

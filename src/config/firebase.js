@@ -6,16 +6,16 @@ import "firebase/firestore";
 import "firebase/storage";
 
 // Your web app's Firebase configuration
-var firebaseConfig = {
-    apiKey: "AIzaSyAl7UzfT-yjv3coDvud7QpCWdupKY7hzUg",
-    authDomain: "bookings-117.firebaseapp.com",
-    databaseURL: "https://bookings-117.firebaseio.com",
-    projectId: "bookings-117",
-    storageBucket: "bookings-117.appspot.com",
-    messagingSenderId: "947340423857",
-    appId: "1:947340423857:web:5fcb42a8932dfee654a890",
-    measurementId: "G-B6V106DK1B"
-  };
+const firebaseConfig = {
+    apiKey: "AIzaSyDtVhUeaF_JHdBckEhtjgX6ToIh5aRYkSM",
+    authDomain: "waseem-transfers.firebaseapp.com",
+    databaseURL: "https://waseem-transfers.firebaseio.com",
+    projectId: "waseem-transfers",
+    storageBucket: "waseem-transfers.appspot.com",
+    messagingSenderId: "1053709360760",
+    appId: "1:1053709360760:web:1aa867700123f4dea3178d",
+    measurementId: "G-H6Z91H5XPT"
+};
 // Initialize Firebase
 
 firebase.initializeApp(firebaseConfig);
@@ -29,6 +29,6 @@ var storage = firebase.storage();
 var storageRef = storage.ref();
 
 
-export {db, storage, storageRef}
+export { db, storage, storageRef }
 
 export default firebase;

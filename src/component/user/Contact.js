@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { db } from '../../config/firebase';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import UserHeader from './Header'
 import UserFooter from './Footer'
 
@@ -44,7 +44,7 @@ class Contact extends Component {
                             <h1>Contact us</h1>
                             <nav role="navigation" className="breadcrumbs">
                                 <ul>
-                                    <li><a href="index.html" title="Home">Home</a></li>
+                                    <li><Link to="/" title="Home">Home</Link></li>
                                     <li>Contact</li>
                                 </ul>
                             </nav>
@@ -55,7 +55,7 @@ class Contact extends Component {
 
                 {/* <!--- Google map --> */}
                 <div id="map_canvas" className="gmap">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.280854423438!2d73.08354661462866!3d31.433934158551363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x392242829d7a0763%3A0xd792771da24b3615!2sIqbal%20Stadium%20for%20Cricket!5e0!3m2!1sen!2s!4v1585566554903!5m2!1sen!2s" title="map" width="100%" height="450" frameBorder="0" style={{border:0}} allowFullScreen="" X-Frame-Options="" aria-hidden="false" tabIndex="0"></iframe> 
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.280854423438!2d73.08354661462866!3d31.433934158551363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x392242829d7a0763%3A0xd792771da24b3615!2sIqbal%20Stadium%20for%20Cricket!5e0!3m2!1sen!2s!4v1585566554903!5m2!1sen!2s" title="map" width="100%" height="450" frameBorder="0" style={{border:0}} allowFullScreen="" x-frame-options="" aria-hidden="false" tabIndex="0"></iframe> 
                    </div>
                 {/* <!--- //Google map --> */}
 

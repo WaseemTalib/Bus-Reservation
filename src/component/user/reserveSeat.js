@@ -15,17 +15,18 @@ class reserveSeat extends Component {
         seats: "",
     }
     handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value })
+        this.setState({
+            [event.target.name]: event.target.value })
     }
 
     componentDidMount = () => {
         let busRef = this.props.match.params.seatId
         db.collection('bus').doc(busRef).get().then(snapShot => {
-            const data = [];
-            const gotData = snapShot.data();
-            data.push(gotData)
-            this.setState({ data });
-        })
+                const data = [];
+                const gotData = snapShot.data();
+                data.push(gotData)
+                this.setState({ data });
+            })
             .then(() => {
 
                 this.state.data.map((el, i) => {
@@ -43,30 +44,64 @@ class reserveSeat extends Component {
     }
 
     showTable = () => this.state.data.map((el, i) => {
-        return <tbody key={i} className="full-width">
-            <tr><td>Bus Type</td><td>{el.type}</td></tr>
-            <tr><td>Departure</td><td>{el.from}</td></tr>
-            <tr><td>Destination</td><td>{el.to}</td></tr>
-            <tr><td>Departure Date</td><td>{el.date}</td></tr>
-            <tr><td>Departure Time </td><td>{el.time}</td></tr>
-            <tr><td>Fare</td><td>{el.fare}</td></tr>
-        </tbody>
+        return <tbody key = { i }
+        className = "full-width" >
+            <
+            tr > < td > Bus Type < /td><td>{el.type}</td > < /tr> <
+            tr > < td > Departure < /td><td>{el.from}</td > < /tr> <
+            tr > < td > Destination < /td><td>{el.to}</td > < /tr> <
+            tr > < td > Departure Date < /td><td>{el.date}</td > < /tr> <
+            tr > < td > Departure Time < /td><td>{el.time}</td > < /tr> <
+            tr > < td > Fare < /td><td>{el.fare}</td > < /tr> <
+            /tbody>
     })
 
     showSeats = (seatsData) => {
         return seatsData.map((e, i) => {
             if (e.seatNo <= 9) {
                 if (e.booked === false) {
-                    return <button key={i} onClick={() => { this.selectedSeat(e) }} disabled={false} className="btn seat" id={e.seatNo} style={{ marginRight: "2px", marginBottom: "3px" }} type="button">{`0${e.seatNo}`}</button>
+                    return <button key = { i }
+                    onClick = {
+                        () => { this.selectedSeat(e) } }
+                    disabled = { false }
+                    className = "btn seat"
+                    id = { e.seatNo }
+                    style = {
+                        { marginRight: "2px", marginBottom: "3px" } }
+                    type = "button" > { `0${e.seatNo}` } < /button>
 
                 } else {
-                    return <button key={i} className="btn" id="seat" style={{ backgroundColor: "#4084A7", marginRight: "2px", marginBottom: "3px", cursor: "not-allowed" }} title="Already Booked" disabled={true} type="button" type="button">{`0${e.seatNo}`}</button>
+                    return <button key = { i }
+                    className = "btn"
+                    id = "seat"
+                    style = {
+                        { backgroundColor: "#4084A7", marginRight: "2px", marginBottom: "3px", cursor: "not-allowed" } }
+                    title = "Already Booked"
+                    disabled = { true }
+                    type = "button"
+                    type = "button" > { `0${e.seatNo}` } < /button>
                 }
             } else {
                 if (e.booked === false) {
-                    return <button key={i} onClick={() => { this.selectedSeat(e) }} disabled={false} className="btn seat" id={e.seatNo} style={{ marginRight: "2px", marginBottom: "3px" }} type="button">{e.seatNo}</button>
+                    return <button key = { i }
+                    onClick = {
+                        () => { this.selectedSeat(e) } }
+                    disabled = { false }
+                    className = "btn seat"
+                    id = { e.seatNo }
+                    style = {
+                        { marginRight: "2px", marginBottom: "3px" } }
+                    type = "button" > { e.seatNo } < /button>
                 } else {
-                    return <button key={i} className="btn" id="seat" style={{ backgroundColor: "#4084A7", marginRight: "2px", marginBottom: "3px", cursor: "not-allowed" }} title="Already Booked" disabled={true} type="button" type="button">{e.seatNo}</button>
+                    return <button key = { i }
+                    className = "btn"
+                    id = "seat"
+                    style = {
+                        { backgroundColor: "#4084A7", marginRight: "2px", marginBottom: "3px", cursor: "not-allowed" } }
+                    title = "Already Booked"
+                    disabled = { true }
+                    type = "button"
+                    type = "button" > { e.seatNo } < /button>
                 }
             }
         })
@@ -76,8 +111,24 @@ class reserveSeat extends Component {
     selectedSeat = (e) => {
 
         let selectedSeats = [...this.state.selectedSeats];
-        document.getElementById(`${e.seatNo}`).disabled = true;
-        document.getElementById(`${e.seatNo}`).style.backgroundColor = "#4084A7";
+        let seatAttribute = document.getElementById(e.seatNo)
+
+        seatAttribute.disabled = true;
+        seatAttribute.style.backgroundColor = "#4084A7";
+
+        //  will be upgraded in the future
+
+        // if(selectedSeats.includes(e.seatNo === false)){
+        //     seatAttribute.disabled = true;
+        //     seatAttribute.style.backgroundColor = "#4084A7";
+        //     selectedSeats.push(e.seatNo)
+        //     this.setState({ selectedSeats })
+        // }else{
+        //     seatAttribute.disabled = false;
+        //     seatAttribute.style.backgroundColor = "black";
+        //     selectedSeats.push(e.seatNo)
+        //     this.setState({ selectedSeats })
+        // }
 
         selectedSeats.push(e.seatNo)
         this.setState({ selectedSeats })
@@ -99,15 +150,15 @@ class reserveSeat extends Component {
                 this.state.data.map((el, i) => {
                     let destination = `${el.from}->${el.to}`
                     return db.collection('Reserve').doc(busRef).collection(destination).doc(userEmail).set({
-                        email: userEmail,
-                        seatNo: this.state.selectedSeats,
-                        from: el.from,
-                        to: el.to,
-                        type: el.type,
-                        fare: el.fare,
-                        date: el.date,
-                        time: el.time,
-                    })
+                            email: userEmail,
+                            seatNo: this.state.selectedSeats,
+                            from: el.from,
+                            to: el.to,
+                            type: el.type,
+                            fare: el.fare,
+                            date: el.date,
+                            time: el.time,
+                        })
                         .then(() => {
                             this.state.selectedSeats.map((e, i) => {
                                 return db.collection('SeatCount').doc(busRef).collection("seats").doc(`seat No ${e}`)
@@ -138,85 +189,146 @@ class reserveSeat extends Component {
     }
 
     render() {
-        return <AuthContext.Consumer>
-            {(authContext) => {
-                // if (authContext.isAuthenticated) {
+        return <AuthContext.Consumer > {
+                (authContext) => {
+                    // if (authContext.isAuthenticated) {
 
-                return <div className="reserveSeat theme-purple index-2">
-            
-                    <div className="outer" style={{ backgroundColor: `rgba(0,0,0,0.5)`, position: "fixed", top: 0, left: 0, width: "100%", height: "100vh", zIndex: 1000 }}>
-                        <div className="inner" style={{ backgroundColor: `rgb(64, 132, 167)`, color: "white", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "70%", height: "auto", zIndex: 1000 }}>
-                            <button className="btn" id="seat" style={{ float: "right" }} onClick={() => document.querySelector(".outer").style.display = "none"}>&times;</button>
-                            <h5>Before Make any booking please Make Sure That your are signed in.</h5>
-                        </div>
-                    </div>
+                    return <div className = "reserveSeat theme-purple index-2" >
+
+                        <
+                        div className = "outer"
+                    style = {
+                            { backgroundColor: `rgba(0,0,0,0.5)`, position: "fixed", top: 0, left: 0, width: "100%", height: "100vh", zIndex: 1000 } } >
+                        <
+                        div className = "inner"
+                    style = {
+                            { backgroundColor: `rgb(64, 132, 167)`, color: "white", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "70%", height: "auto", zIndex: 1000 } } >
+                        <
+                        button className = "btn"
+                    id = "seat"
+                    style = {
+                        { float: "right" } }
+                    onClick = {
+                        () => document.querySelector(".outer").style.display = "none" } > & times; < /button> <
+                    h5 > Before Make any booking please Make Sure That your are signed in . < /h5> <
+                        /div> <
+                        /div>
 
 
-                    <UserHeader />
-                    <main className="main" role="main">
+                    <
+                    UserHeader / >
+                        <
+                        main className = "main"
+                    role = "main" >
 
-                        <div className="wrap">
-                            <div className="row">
+                        <
+                        div className = "wrap" >
+                        <
+                        div className = "row" >
 
-                                <div className="full">
-                                    <form>
-                                        <table className="data responsive" style={{ padding: "50px 40px 30px" }}>
-                                            {this.showTable()}
-                                        </table>
-                                    </form>
-                                </div>
-                                <div className="three-fourth">
-                                    <div className="box history">
-                                        <h6 >Select Your Seat: </h6>
-                                        <h2 style={{ display: "inline-block" }}>Note:&ensp; </h2>
-                                        <p style={{ display: "inline-block" }}><b> CHOOSE WISELY </b>because once you select your seat you </p>
-                                        <p style={{ color: "red", display: "inline-block" }}>&ensp;CANNOT CHANGE&ensp; </p>
-                                        <p style={{ display: "inline-block" }}> your choice.</p>
-                                        <p style={{ display: "inline-block" }}>If you Choose Wrong one! you have to click on this button-> </p>
-                                        <button onClick={() => { window.location.reload() }}>Reload</button><br />
-                                        <label>Available: </label>
-                                        <button style={{ border: "1px solid grey", backgroundColor: "black", color: "white" }} id="seat"> &ensp;&ensp;&ensp;</button>
-                                        <label>Booked: </label>
-                                        <button style={{ border: "1px solid grey", backgroundColor: "#4084A7", color: "white" }} id="seat"> &ensp;&ensp;&ensp;</button>
-                                        <br /><br />
-                                        <div className="row">
+                        <
+                        div className = "full" >
+                        <
+                        form >
+                        <
+                        table className = "data responsive"
+                    style = {
+                            { padding: "50px 40px 30px" } } > { this.showTable() } <
+                        /table> <
+                        /form> <
+                        /div> <
+                        div className = "three-fourth" >
+                        <
+                        div className = "box history" >
+                        <
+                        h6 > Select Your Seat: < /h6> <
+                        h2 style = {
+                            { display: "inline-block" } } > Note: & ensp; < /h2> <
+                    p style = {
+                            { display: "inline-block" } } > < b > CHOOSE WISELY < /b>because once you select your seat you </p >
+                        <
+                        p style = {
+                            { color: "red", display: "inline-block" } } > & ensp;
+                    CANNOT CHANGE & ensp; < /p> <
+                    p style = {
+                            { display: "inline-block" } } > your choice. < /p> <
+                        p style = {
+                            { display: "inline-block" } } > If you Choose Wrong one!you have to click on this button - > < /p> <
+                        button onClick = {
+                            () => { window.location.reload() } } > Reload < /button><br / >
+                        <
+                        label > Available: < /label> <
+                        button style = {
+                            { border: "1px solid grey", backgroundColor: "black", color: "white" } }
+                    id = "seat" > & ensp; & ensp; & ensp; < /button> <
+                    label > Booked: < /label> <
+                        button style = {
+                            { border: "1px solid grey", backgroundColor: "#4084A7", color: "white" } }
+                    id = "seat" > & ensp; & ensp; & ensp; < /button> <
+                    br / > < br / >
+                        <
+                        div className = "row" >
 
-                                            {this.showSeats(this.state.seatsData)}
-                                        </div>
+                        { this.showSeats(this.state.seatsData) } <
+                        /div>
 
-                                                <div className="form-group select one-half" id="select">
-                                                    <p id="message" style={{ color: "#ffb307" }}></p>
-                                                </div>
-                                    </div>
+                    <
+                    div className = "form-group select one-half"
+                    id = "select" >
+                        <
+                        p id = "message"
+                    style = {
+                            { color: "#ffb307" } } > < /p> <
+                        /div> <
+                        /div>
 
-                                </div>
-                                <aside className="one-fourth sidebar right">
+                    <
+                    /div> <
+                    aside className = "one-fourth sidebar right" >
 
-                                    <div className="widget">
-                                        <h4>Booking</h4>
-                                        <div className="textwidget">
-                                            <div id="selectedSeat">
-                                            </div>
-                                            <br />
-                                            <label>Number of Seats</label>
-                                            <input className="form-control" type="text" placeholder={this.state.selectedSeats.length} readOnly />
+                        <
+                        div className = "widget" >
+                        <
+                        h4 > Booking < /h4> <
+                        div className = "textwidget" >
+                        <
+                        div id = "selectedSeat" >
+                        <
+                        /div> <
+                        br / >
+                        <
+                        label > Number of Seats < /label> <
+                        input className = "form-control"
+                    type = "text"
+                    placeholder = { this.state.selectedSeats.length }
+                    readOnly / >
 
-                                            <br />
-                                        </div>
-                                    </div>
-                                </aside>
-                                <button onClick={this.book} style={{ margin: "10px" }} id="submit" name="submit" className="btn color medium centre" >Confirm Booking</button>
-                            </div>
-                        </div>
-                    </main>
+                        <
+                        br / >
+                        <
+                        /div> <
+                        /div> <
+                        /aside> <
+                        button onClick = { this.book }
+                    style = {
+                        { margin: "10px" } }
+                    id = "submit"
+                    name = "submit"
+                    className = "btn color medium centre" > Confirm Booking < /button> <
+                        /div> <
+                        /div> <
+                        /main>
 
-                    <UserFooter />
-                </div>
-                // }
-                // else
-                //     return <Login history={this.props.history} />
-            }}
-        </AuthContext.Consumer>
+                    <
+                    UserFooter / >
+                        <
+                        /div>
+                        // }
+                        // else
+                        //     return <Login history={this.props.history} />
+                }
+            } <
+            /AuthContext.Consumer>
 
     }
 

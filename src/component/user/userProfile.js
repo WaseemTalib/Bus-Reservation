@@ -18,17 +18,12 @@ class userProfile extends Component {
             let userEmail = this.context.user.email;
             db.collection('userInfo').doc(userEmail).get().then(snapShot => {
                 const gotData = snapShot.data()
-                let main = document.getElementById("main")
-                const profile = `<div className="full">
-                                    <p><span><strong>Name: </strong></span> ${gotData.userName.toUpperCase()}</p>
-                            </div>
-                                <div className="full">
-                                    <p><span><strong>Email: </strong></span> ${gotData.email}</p>
-                            </div>
-                                <div className="full">
-                                    <p><span><strong>User Id: </strong></span> ${gotData.userId}</p>
-                            </div>`;
-                main.innerHTML = profile;
+                let name = document.querySelector("#userName")
+                let email = document.querySelector("#userEmail")
+                let id = document.querySelector("#userId")
+                name.innerHTML = gotData.userName.toUpperCase();
+                email.innerHTML = gotData.email;
+                id.innerHTML = gotData.userId;
             })
         }, 8000);
     }
@@ -38,21 +33,31 @@ class userProfile extends Component {
             {(authContext) => {
                 if (authContext.isAuthenticated) {
 
-                return <div className="viewSchedule theme-purple index-2">
-                    <UserHeader />
-                    <div className="full-width" style={{ padding: "50px 40px 30px" }}>
-                        <div className="box history">
-                            <h6>User Profile</h6>
-                            <div id="main"></div>
+                    return <div className="viewSchedule theme-purple index-2">
+                        <UserHeader />
+                        <div className="full-width" style={{ padding: "50px 40px 30px" }}>
+                            <div className="box history">
+                                <h6>User Profile</h6>
+                                <div id="main">
+                                    <div className="full">
+                                        <p><span><strong>Name: </strong></span> <span id="userName"> </span></p>
+                                    </div>
+                                    <div className="full">
+                                        <p><span><strong>Email: </strong></span> <span id="userEmail">  </span></p>
+                                    </div>
+                                    <div className="full">
+                                        <p><span><strong>User Id: </strong></span> <span  id="userId">  </span></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <UserFooter />
-                </div>
+                        <UserFooter />
+                    </div>
 
                 }
                 else
-                return <Login history={this.props.history} />
+                    return <Login history={this.props.history} />
             }}
         </AuthContext.Consumer>
 

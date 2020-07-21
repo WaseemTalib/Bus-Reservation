@@ -53,8 +53,8 @@ class viewSchedule extends Component {
                                     <h1>Time Schedule</h1>
                                     <nav role="navigation" className="breadcrumbs">
                                         <ul>
-                                            <li><a href="index.html" title="Home">Home</a></li>
-                                            <li>Schedule</li>
+                                        <li><Link to="/" title="Home">Home</Link></li>
+                                <li>Schedule</li>
                                         </ul>
                                     </nav>
                                 </div>

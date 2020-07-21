@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import  UserHeader from './Header'
-import  UserFooter from './Footer'
+import  UserHeader from './Header';
+import  UserFooter from './Footer';
+import { Link } from 'react-router-dom';
 
 class About extends Component {
 
@@ -18,7 +19,7 @@ class About extends Component {
 					<h1>About us</h1>
 					<nav role="navigation" className="breadcrumbs">
 						<ul>
-							<li><a href="index.html" title="Home">Home</a></li>
+						<Link to="/" title="Home">Home</Link>
 							<li>About us</li>
 						</ul>
 					</nav>

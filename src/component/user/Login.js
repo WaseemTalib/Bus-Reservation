@@ -52,7 +52,7 @@ class Login extends Component {
 									<h1>Login</h1>
 									<nav role="navigation" className="breadcrumbs">
 										<ul>
-											<li><a href="index.htm" title="Home">Home</a></li>
+										<li><Link to="/" title="Home">Home</Link></li>
 											<li>Login</li>
 										</ul>
 									</nav>
@@ -88,7 +88,8 @@ class Login extends Component {
 											</div>
 
 											<p>Dont have an account yet? <Link to="/sign">Sign up</Link>.</p>
-										</form>
+											<p>Do you forget Password? <Link to="/forgetPass">Forget Password</Link>.</p>
+											</form>
 									</div>
 									{/* <!--//Login--> */}
 								</div>

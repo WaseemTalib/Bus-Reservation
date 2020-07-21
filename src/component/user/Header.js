@@ -19,9 +19,7 @@ class UserHeader extends Component {
                             <Link to="/" title="BooKINGs"><img src="/logoIcon.png" width="100px" alt="" /> </Link>
                         </div>
                         <nav role="navigation" className="main-nav">
-
-
-                            {
+                                {
                                 authContext.isAuthenticated === true
                                     ?
                                     <ul>
@@ -43,10 +41,8 @@ class UserHeader extends Component {
                                     </ul>
                             }
                         </nav>
-                        {/* <!-- //Main Nav --> */}
                     </div>
                 </header>
-                //   <!-- //Header -->
             }}
         </AuthContext.Consumer>
     }
